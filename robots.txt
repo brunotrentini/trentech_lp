@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trentech.com.br/sitemap.xml
