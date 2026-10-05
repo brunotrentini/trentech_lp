@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# Atualiza a branch atual e reinicia o serviço da aplicação.
+# Atualiza a branch atual e recria o contêiner da aplicação.
 # Uso na VPS, dentro da pasta trentech-lp: ./update.sh
-# Para outro nome de serviço: APP_SERVICE=meu-servico ./update.sh
 
 set -euo pipefail
 
@@ -29,7 +28,6 @@ fi
 echo "Atualizando branch '$BRANCH'..."
 git pull --ff-only
 
-APP_SERVICE="${APP_SERVICE:-trentech-lp}"
-echo "Reiniciando o serviço '$APP_SERVICE'..."
-sudo systemctl restart "$APP_SERVICE"
-sudo systemctl status "$APP_SERVICE" --no-pager
+echo "Reconstruindo e iniciando a aplicação com Docker Compose..."
+docker compose up -d --build --remove-orphans
+docker compose ps
